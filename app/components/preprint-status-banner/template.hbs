@@ -1,0 +1,13 @@
+<div id="preprint-status" class="container">
+    {{#if model.provider.isPending}}
+        Loading...
+    {{else}}
+        <i class="fa {{if isPending "fa-hourglass-o"}} {{if isAccepted "fa-check-circle-o"}} {{if isRejected "fa-times-circle-o"}} status-icon"></i>
+        <p>
+            <strong>{{model.reviewsState}}:</strong>
+            <span>
+                {{model.provider.name}} uses {{model.provider.reviewsWorkflow}}, therefore this preprint is {{bannerContent}}.
+            </span>
+        </p>
+    {{/if}}
+</div>
