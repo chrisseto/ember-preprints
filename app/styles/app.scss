@@ -353,6 +353,10 @@ $color-alert-bg-info: #D9EDF7;
 $color-alert-border-info: #BCE8F1;
 $color-alert-text-info: #31708F;
 
+$color-bg-color-grey: #333333;
+$color-bg-color-light: #EEEEEE;
+$color-border-light: #DDDDDD;
+
 .preprint-status-pending-pre {
     background-color: $color-alert-bg-warning;
     border: 1px solid $color-alert-border-warning;
@@ -403,15 +407,67 @@ $color-alert-text-info: #31708F;
 }
 
 #preprint-status {
-    padding: 20px 15px;
-    font-size: 16px;
+    .flex-container {
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        align-content: space-between;
 
-    p {
-        margin-bottom: 0px;
-        display: inline-block;  // required for the text-transform
-    }
-    p::first-letter {
-        text-transform: uppercase;
+        strong {
+            display: inline-block;  // required for the text-transform
+        }
+        strong::first-letter {
+            text-transform: uppercase;
+        }
+        .status-explanation {
+            padding-right: 15px;
+        }
+        .reviewer-feedback {
+            margin-left: auto;
+            padding-right: 15px;
+
+            .dropdown-menu {
+                font-size:62.5%;
+                background-color: $color-bg-color-light;
+                color: $color-bg-color-grey;
+                border: 1px solid $color-border-light;
+                width: 445px;
+                left: auto;
+                right: 15px;
+                margin-top: 0px;
+                z-index: 98;  // prevent dropdown from scrolling over navbar
+
+                .status {
+                    font-size: 1.4em;
+                }
+
+                .moderator-comment {
+                    font-size: 1.8em;
+                    background-color: white;
+                    padding: 30px 15px;
+
+                    p {
+                        padding-bottom: 5px;
+                    }
+                }
+
+                .feedback-header {
+                    font-size: 2.0em;
+                    border-bottom: 1px solid $color-border-light;
+                    padding: 5px 15px 8px 15px;
+
+                    a {
+                        color: grey;
+                        float: right;
+                    }
+                }
+
+                .feedback-footer {
+                    border-top: 1px solid $color-border-light;
+                }
+            }
+        }
     }
 }
 
