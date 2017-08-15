@@ -54,6 +54,58 @@ const BasicsValidations = buildValidations({
     }
 });
 
+const PENDING = 'pending';
+const ACCEPTED = 'accepted';
+const REJECTED = 'rejected';
+
+const PRE_MODERATION = 'pre-moderation';
+const POST_MODERATION = 'post-moderation';
+
+export const STATUS = Object.freeze(Ember.Object.create({
+    [PENDING]: 'global.pending',
+    [ACCEPTED]: 'global.accepted',
+    [REJECTED]: 'global.rejected'
+}));
+
+export const SUBMIT_MESSAGES = Object.freeze(Ember.Object.create({
+    default: 'submit.body.submit.information.line1',
+    moderation: 'submit.body.submit.information.line1_moderation',
+    [PRE_MODERATION]: 'submit.body.submit.information.line3_pre',
+    [POST_MODERATION]: 'submit.body.submit.information.line3_post',
+}));
+
+export const EDIT_MESSAGES = Object.freeze(Ember.Object.create({
+    line1: {
+        [PRE_MODERATION]: 'submit.body.edit.information.line1_pre',
+        [POST_MODERATION]: 'submit.body.edit.information.line1_post_rejected'
+    },
+    line2: {
+        [PENDING]: {
+            [PRE_MODERATION]: 'submit.body.edit.information.line2_pre_pending',
+        },
+        [REJECTED]: {
+            [PRE_MODERATION]: 'submit.body.edit.information.line2_pre_rejected',
+            [POST_MODERATION]: 'submit.body.edit.information.line2_post_rejected'
+        }
+    }
+}));
+
+export const WORKFLOW = Object.freeze(Ember.Object.create({
+    [PRE_MODERATION]: 'global.pre_moderation',
+    [POST_MODERATION]: 'global.post_moderation'
+}));
+
+export const ACTION = Object.freeze(Ember.Object.create({
+    create: {
+        heading: 'submit.create_heading',
+        button: 'submit.body.submit.create_button'
+    },
+    submit: {
+        heading: 'submit.submit_heading',
+        button: 'submit.body.submit.submit_button'
+    }
+}));
+
 function subjectIdMap(subjectArray) {
     // Maps array of arrays of disciplines into array of arrays of discipline ids.
     return subjectArray.map(subjectBlock => subjectBlock.map(subject => subject.id));
@@ -77,7 +129,13 @@ export default Ember.Controller.extend(Analytics, BasicsValidations, NodeActions
     filePickerState: State.START, // Selected upload state (initial decision on form) - new or existing project? (is poorly named)
     _existingState: existingState, // File states - new file or existing file
     existingState: existingState.CHOOSE, // Selected file state - new or existing file (poorly named)
-    _names: ['upload', 'discipline', 'basics', 'authors', 'submit'].map(str => str.capitalize()), // Form section headers
+    _names: ['upload', 'discipline', 'basics', 'authors'].map(str => str.capitalize()), // Form section headers
+
+    init() {
+        this._super(...arguments);
+        // console.log(this.get('theme.provider.reviewsWorkflow'));
+        // console.log(this.get('usesModeration'));
+    },
 
     // Data for project picker; tracked internally on load
     user: null,
@@ -122,7 +180,6 @@ export default Ember.Controller.extend(Analytics, BasicsValidations, NodeActions
     clearFields() {
         // Restores submit form defaults.  Called when user submits preprint, then hits back button, for example.
         this.get('panelActions').open('Upload');
-        this.get('panelActions').close('Submit');
 
         this.setProperties(Ember.merge(
             this.get('_names').reduce((acc, name) => Ember.merge(acc, {[`${name.toLowerCase()}SaveState`]: false}), {}), {
@@ -357,6 +414,57 @@ export default Ember.Controller.extend(Analytics, BasicsValidations, NodeActions
     // True if the current user is and admin and the node is not a registration.
     canEdit: Ember.computed('isAdmin', 'node', function() {
         return this.get('isAdmin') && !(this.get('node.registration'));
+    }),
+
+    ///////////////////////////////////////////////////
+    // Language about submission and moderation.
+    ////////////////////////////////////////////////////
+
+    moderationType: Ember.computed('theme.provider.reviewsWorkflow', function() {
+        if (this.get('theme.provider.reviewsWorkflow') === 'none') {
+            return '';
+        }
+        return this.get('theme.provider.reviewsWorkflow').toLowerCase();
+    }),
+    workflow: Ember.computed('moderationType', function () {
+        return WORKFLOW[this.get('moderationType')];
+    }),
+    providerName: Ember.computed('theme.isProvider', function() {
+        return this.get('theme.isProvider') ? this.get('theme.provider.name') : this.get('i18n').t('global.brand_name');
+    }),
+
+    // submission
+    heading: Ember.computed('moderationType', function() {
+        return this.get('moderationType') === PRE_MODERATION ? ACTION['submit']['heading'] : ACTION['create']['heading'];
+    }),
+    buttonLabel: Ember.computed('moderationType', function() {
+        return this.get('moderationType') === PRE_MODERATION ? ACTION['submit']['button'] : ACTION['create']['button'];
+    }),
+    generalInformation: Ember.computed('moderationType', function() {
+        return this.get('moderationType') ? SUBMIT_MESSAGES['moderation'] : SUBMIT_MESSAGES['default'];
+    }),
+    moderationInformation: Ember.computed('theme.provider.reviewsWorkflow', function() {
+        return SUBMIT_MESSAGES[this.get('theme.provider.reviewsWorkflow')];
+    }),
+
+    // edit
+    showInformation: Ember.computed('moderationType', 'model.reviewsState', function() {
+        let state = this.get('model.reviewsState');
+        let modType = this.get('moderationType');
+        return !(state === ACCEPTED || (modType === POST_MODERATION && state === PENDING));
+    }),
+    editInformation1: Ember.computed('moderationType', function() {
+        return EDIT_MESSAGES['line1'][this.get('moderationType')];
+    }),
+    editInformation2: Ember.computed('moderationType', 'model.reviewsState', function() {
+        return EDIT_MESSAGES['line2'][this.get('model.reviewsState')][this.get('moderationType')];
+    }),
+    canResubmit: Ember.computed('moderationType', 'model.reviewsState', function() {
+        let state = this.get('model.reviewsState');
+        if (this.get('moderationType') === PRE_MODERATION && (state === PENDING || state === REJECTED)) {
+            return true;
+        }
+        return false;
     }),
 
     actions: {
@@ -917,6 +1025,15 @@ export default Ember.Controller.extend(Analytics, BasicsValidations, NodeActions
                             .t(`submit.error_${this.get('editMode') ? 'completing' : 'saving'}_preprint`)
                         );
                 });
+        },
+        cancel() {
+            this.transitionToRoute('index');
+        },
+        returnToSubmission() {
+            this.transitionToRoute(
+                `${this.get('theme.isSubRoute') ? 'provider.' : ''}content`,
+                this.get('model')
+            );
         },
     }
 });

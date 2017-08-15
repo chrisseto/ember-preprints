@@ -27,8 +27,8 @@ const MESSAGE = {
 };
 
 const WORKFLOW = {
-    [PRE_MODERATION]: 'components.preprint-status-banner.pre_moderation',
-    [POST_MODERATION]: 'components.preprint-status-banner.post_moderation'
+    [PRE_MODERATION]: 'global.pre_moderation',
+    [POST_MODERATION]: 'global.post_moderation'
 };
 
 const CLASS_NAMES = {
@@ -37,7 +37,6 @@ const CLASS_NAMES = {
     [ACCEPTED]: 'preprint-status-accepted',
     [REJECTED]: 'preprint-status-rejected'
 };
-
 
 export default Ember.Component.extend({
     i18n: Ember.inject.service(),
