@@ -1,26 +1,45 @@
 import Ember from 'ember';
-const {
-    computed,
-} = Ember;
 
-const messagePendingPre = 'components.preprint-status-banner.message.pending_pre';
-const messagePendingPost ='components.preprint-status-banner.message.pending_post';
-const messageAccepted = 'components.preprint-status-banner.message.accepted';
-const messageRejected = 'components.preprint-status-banner.message.rejected';
+const PENDING = 'pending';
+const ACCEPTED = 'accepted';
+const REJECTED = 'rejected';
 
-const statusPending = 'components.preprint-status-banner.pending';
-const statusAccepted = 'components.preprint-status-banner.accepted';
-const statusRejected = 'components.preprint-status-banner.rejected';
+const PRE_MODERATION = 'pre-moderation';
+const POST_MODERATION = 'post-moderation';
 
-const workflowPre = 'components.preprint-status-banner.pre_moderation';
-const workflowPost = 'components.preprint-status-banner.post_moderation';
+const ICONS = {
+    [PENDING]: 'fa-hourglass-o',
+    [ACCEPTED]: 'fa-check-circle-o',
+    [REJECTED]: 'fa-times-circle-o'
+};
 
-const iconPending = 'fa-hourglass-o';
-const iconAccepted = 'fa-check-circle-o';
-const iconRejected = 'fa-times-circle-o';
+const STATUS = {
+    [PENDING]: 'components.preprint-status-banner.pending',
+    [ACCEPTED]: 'components.preprint-status-banner.accepted',
+    [REJECTED]: 'components.preprint-status-banner.rejected'
+};
+
+const MESSAGE = {
+    [PRE_MODERATION]: 'components.preprint-status-banner.message.pending_pre',
+    [POST_MODERATION]: 'components.preprint-status-banner.message.pending_post',
+    [ACCEPTED]: 'components.preprint-status-banner.message.accepted',
+    [REJECTED]: 'components.preprint-status-banner.message.rejected'
+};
+
+const WORKFLOW = {
+    [PRE_MODERATION]: 'components.preprint-status-banner.pre_moderation',
+    [POST_MODERATION]: 'components.preprint-status-banner.post_moderation'
+};
+
+const CLASS_NAMES = {
+    [PRE_MODERATION]: 'preprint-status-pending-pre',
+    [POST_MODERATION]: 'preprint-status-pending-post',
+    [ACCEPTED]: 'preprint-status-accepted',
+    [REJECTED]: 'preprint-status-rejected'
+};
+
 
 export default Ember.Component.extend({
-    i18n: Ember.inject.service(),
     theme: Ember.inject.service(),
 
     // translations
@@ -30,90 +49,51 @@ export default Ember.Component.extend({
     baseMessage: 'components.preprint-status-banner.message.base',
 
     classNames: ['preprint-status-component'],
-    classNameBindings: [
-        'isPendingPre:preprint-status-pending-pre:preprint-status-pending-post',
-        'isAccepted:preprint-status-accepted:',
-        'isRejected:preprint-status-rejected:',
-    ],
-    attributeBindings: ['hidden'],
+    classNameBindings: ['getClassName'],
 
-    hidden: computed('model.provider.reviewsWorkflow', function() {
-        return this.get('model.provider.reviewsWorkflow') === 'none';
+    getClassName: Ember.computed('submission.provider.reviewsWorkflow', 'submission.reviewsState', function() {
+        if (this.get('submission.reviewsState') === PENDING) {
+            return CLASS_NAMES[this.get('submission.provider.reviewsWorkflow').toLowerCase()]
+        }
+        return CLASS_NAMES[this.get('submission.reviewsState')];
     }),
 
-    reviewerComment: '',
-    moderatorName: '',
+    // TODO: move to 'content/index.hbs' once null value is updated
+    attributeBindings: ['hidden'],
+    hidden: Ember.computed('submission.provider.reviewsWorkflow', function() {
+        return this.get('submission.provider.reviewsWorkflow') === 'none';
+    }),
 
-    init() {
-        this._super(...arguments);
-
-        let _this = this;
-        this.get('model.reviewLogs').then(function(reviewLogs) {
+    didReceiveAttrs() {
+        this.get('submission.reviewLogs').then(reviewLogs => {
             let firstLog = reviewLogs.toArray()[0];
-            _this.set('reviewerComment', firstLog.get('comment'));
-
-            firstLog.get('creator').then(function(user) {
-                _this.set('moderatorName', user.get('fullName'));
+            this.set('reviewerComment', firstLog.get('comment'));
+            firstLog.get('creator').then(user => {
+                this.set('reviewerName', user.get('fullName'));
             })
-        })
+        });
     },
 
-    bannerContent: computed('isPre', 'isPending', 'isRejected', 'isAccepted', function() {
-        if (this.get('isPending')) {
-            if (this.get('isPre')) {
-                return messagePendingPre;
-            }
-            return messagePendingPost;
-        } else if (this.get('isAccepted')) {
-            return messageAccepted;
-        } else if (this.get('isRejected')) {
-            return messageRejected;
+    reviewerComment:'',
+    reviewerName: '',
+
+    bannerContent: Ember.computed('submission.provider.reviewsWorkflow', 'submission.reviewsState', function() {
+        if (this.get('submission.reviewsState') === PENDING) {
+            return MESSAGE[this.get('submission.provider.reviewsWorkflow').toLowerCase()];
         }
+        return MESSAGE[this.get('submission.reviewsState')];
     }),
 
-    status: computed('isPending', 'isRejected', 'isAccepted', function() {
-        if (this.get('isPending')) {
-            return statusPending;
-        } else if (this.get('isAccepted')) {
-            return statusAccepted;
-        } else if (this.get('isRejected')) {
-            return statusRejected;
-        }
+    status: Ember.computed('submission.reviewsState', function() {
+        return STATUS[this.get('submission.reviewsState')];
     }),
 
-    icon: computed('isPending', 'isRejected', 'isAccepted', function() {
-        if (this.get('isPending')) {
-            return iconPending;
-        } else if (this.get('isAccepted')) {
-            return iconAccepted;
-        } else if (this.get('isRejected')) {
-            return iconRejected;
-        }
+    icon: Ember.computed('submission.reviewsState', function() {
+        return ICONS[this.get('submission.reviewsState')];
     }),
 
-    workflow: computed('isPre', function () {
-        if (this.get('isPre')) {
-            return workflowPre;
-        }
-        return workflowPost;
-    }),
-
-    isPre: computed('model.provider.reviewsWorkflow', function () {
-        return this.get('model.provider.reviewsWorkflow').toLowerCase() === 'pre-moderation';
-    }),
-
-    isPendingPre: computed('isPending', 'isPre', function() {
-        return this.get('isPending') && this.get('isPre') ;
-    }),
-
-    isPending: computed('model.reviewsState', function() {
-        return this.get('model.reviewsState') === 'pending';
-    }),
-    isAccepted: computed('model.reviewsState', function() {
-        return this.get('model.reviewsState') === 'accepted';
-    }),
-    isRejected: computed('model.reviewsState', function() {
-        return this.get('model.reviewsState') === 'rejected';
+    workflow: Ember.computed('submission.provider.reviewsWorkflow', function () {
+        return WORKFLOW[this.get('submission.provider.reviewsWorkflow').toLowerCase()];
     }),
 
 });

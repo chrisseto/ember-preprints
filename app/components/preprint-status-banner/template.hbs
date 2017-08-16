@@ -1,6 +1,6 @@
 <div id="preprint-status" class="container p-md">
     <div class="flex-container">
-        {{#if model.provider.isPending}}
+        {{#if submission.provider.isPending}}
             Loading...
         {{else}}
             <div class="status-explanation">
@@ -10,7 +10,7 @@
                     {{t baseMessage name=(if theme.isProvider theme.provider.name (t "global.brand_name")) reviewsWorkflow=(t workflow)}} {{t bannerContent}}.
                 </span>
             </div>
-            {{#if (and reviewerComment (not model.provider.reviewsCommentsPrivate))}}
+            {{#if (and reviewerComment (not submission.provider.reviewsCommentsPrivate))}}
                 <div class="dropdown reviewer-feedback">
                     <button class="btn btn-default dropdown-toggle feedback-btn" type="button" data-toggle="dropdown">
                         {{t labelModeratorFeedback}} <i class="fa fa-caret-down" aria-hidden="true"></i>
@@ -28,8 +28,8 @@
                         </div>
                         <div class="moderator-comment" aria-labelledby="moderator-feedback">
                             <p>{{reviewerComment}}</p>
-                            {{#if (not model.provider.reviewsCommentsAnonymous)}}
-                                <div>{{moderatorName}}</div>
+                            {{#if (not submission.provider.reviewsCommentsAnonymous)}}
+                                <div>{{reviewerName}}</div>
                             {{/if}}
                             {{if theme.isProvider theme.provider.name (t "global.brand_name")}} {{t moderator}}
                         </div>

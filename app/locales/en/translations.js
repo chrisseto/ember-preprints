@@ -360,8 +360,8 @@ export default {
                 moderator: `Moderator`,
                 base: `This {{preprintWords.preprint}} is`,
             },
-            pre_moderation: `post-moderation`,
-            post_moderation: `pre-moderation`,
+            pre_moderation: `pre-moderation`,
+            post_moderation: `post-moderation`,
         },
         'project-chooser': {
             file_upload_create: `Upload a file and create an OSF project`,
