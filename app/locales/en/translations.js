@@ -43,6 +43,10 @@ export default {
         header: {
             last_edited: `Last edited`
         },
+        date_label: {
+            created_on: `Created on`,
+            submitted_on: `Submitted on`
+        },
         share: {
             download: `Download`,
             downloads: `Downloads`,
@@ -237,8 +241,12 @@ export default {
             body: `Are you sure you want to restart this {{preprintWords.preprint}}? Your uploaded file and supplemental information will be deleted.`
         },
         'confirm-share-preprint': {
-            title: `Share {{preprintWords.Preprint}}`,
-            body: `Once this {{preprintWords.preprint}} is made public, you should assume that it will always be public. Even if you delete it, search engines or others may access the files before you do so.`
+            body: `Once this {{preprintWords.preprint}} is made public, you should assume that it will always be public. Even if you delete it, search engines or others may access the files before you do so.`,
+            title: {
+                submit: `Submit {{preprintWords.Preprint}}`,
+                create: `Create {{preprintWords.Preprint}}`,
+                resubmit: `Resubmit {{preprintWords.Preprint}}`
+            }
         },
         'convert-or-copy': {
             organize_language_project: `You can organize your {{preprintWords.preprint}} by storing the file in this project or in its own new component.  If you select ‘Make a new component’,

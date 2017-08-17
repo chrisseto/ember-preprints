@@ -61,20 +61,20 @@ const REJECTED = 'rejected';
 const PRE_MODERATION = 'pre-moderation';
 const POST_MODERATION = 'post-moderation';
 
-export const STATUS = Object.freeze(Ember.Object.create({
-    [PENDING]: 'global.pending',
-    [ACCEPTED]: 'global.accepted',
-    [REJECTED]: 'global.rejected'
-}));
+const MODAL_TITLE = {
+    create: 'components.confirm-share-preprint.title.create',
+    submit: 'components.confirm-share-preprint.title.submit',
+    resubmit: 'components.confirm-share-preprint.title.resubmit'
+};
 
-export const SUBMIT_MESSAGES = Object.freeze(Ember.Object.create({
+const SUBMIT_MESSAGES = {
     default: 'submit.body.submit.information.line1',
     moderation: 'submit.body.submit.information.line1_moderation',
     [PRE_MODERATION]: 'submit.body.submit.information.line3_pre',
     [POST_MODERATION]: 'submit.body.submit.information.line3_post',
-}));
+};
 
-export const EDIT_MESSAGES = Object.freeze(Ember.Object.create({
+const EDIT_MESSAGES = {
     line1: {
         [PRE_MODERATION]: 'submit.body.edit.information.line1_pre',
         [POST_MODERATION]: 'submit.body.edit.information.line1_post_rejected'
@@ -88,14 +88,14 @@ export const EDIT_MESSAGES = Object.freeze(Ember.Object.create({
             [POST_MODERATION]: 'submit.body.edit.information.line2_post_rejected'
         }
     }
-}));
+};
 
-export const WORKFLOW = Object.freeze(Ember.Object.create({
+const WORKFLOW = {
     [PRE_MODERATION]: 'global.pre_moderation',
     [POST_MODERATION]: 'global.post_moderation'
-}));
+};
 
-export const ACTION = Object.freeze(Ember.Object.create({
+const ACTION = {
     create: {
         heading: 'submit.create_heading',
         button: 'submit.body.submit.create_button'
@@ -104,7 +104,7 @@ export const ACTION = Object.freeze(Ember.Object.create({
         heading: 'submit.submit_heading',
         button: 'submit.body.submit.submit_button'
     }
-}));
+};
 
 function subjectIdMap(subjectArray) {
     // Maps array of arrays of disciplines into array of arrays of discipline ids.
@@ -130,12 +130,6 @@ export default Ember.Controller.extend(Analytics, BasicsValidations, NodeActions
     _existingState: existingState, // File states - new file or existing file
     existingState: existingState.CHOOSE, // Selected file state - new or existing file (poorly named)
     _names: ['upload', 'discipline', 'basics', 'authors'].map(str => str.capitalize()), // Form section headers
-
-    init() {
-        this._super(...arguments);
-        // console.log(this.get('theme.provider.reviewsWorkflow'));
-        // console.log(this.get('usesModeration'));
-    },
 
     // Data for project picker; tracked internally on load
     user: null,
@@ -432,6 +426,12 @@ export default Ember.Controller.extend(Analytics, BasicsValidations, NodeActions
     providerName: Ember.computed('theme.isProvider', function() {
         return this.get('theme.isProvider') ? this.get('theme.provider.name') : this.get('i18n').t('global.brand_name');
     }),
+    modalTitle: Ember.computed('moderationType', function() {
+        if (this.get('editMode')) {
+            return MODAL_TITLE['resubmit'];
+        }
+        return this.get('moderationType') === PRE_MODERATION ? MODAL_TITLE['submit'] : MODAL_TITLE['create'];
+    }),
 
     // submission
     heading: Ember.computed('moderationType', function() {
@@ -461,10 +461,7 @@ export default Ember.Controller.extend(Analytics, BasicsValidations, NodeActions
     }),
     canResubmit: Ember.computed('moderationType', 'model.reviewsState', function() {
         let state = this.get('model.reviewsState');
-        if (this.get('moderationType') === PRE_MODERATION && (state === PENDING || state === REJECTED)) {
-            return true;
-        }
-        return false;
+        return this.get('moderationType') === PRE_MODERATION && (state === PENDING || state === REJECTED);
     }),
 
     actions: {
@@ -1007,11 +1004,26 @@ export default Ember.Controller.extend(Analytics, BasicsValidations, NodeActions
             const node = this.get('node');
             this.set('savingPreprint', true);
             this.toggleProperty('shareButtonDisabled');
-            model.set('isPublished', true);
-            node.set('public', true);
+
+            let log = null;
+            if (this.get('moderationType')) {
+                log = this.get('store').createRecord('reviewLog', {
+                   action: 'submit',
+                   reviewable: this.get('model')
+                });
+            }
+            if (this.get('moderationType') !== PRE_MODERATION) {
+                model.set('isPublished', true);
+                node.set('public', true);
+            }
 
             return model.save()
-                .then(() => node.save())
+                .then(() => {
+                    node.save();
+                    if (log) {
+                        log.save();
+                    }
+                })
                 .then(() => {
                     this.transitionToRoute(
                         `${this.get('theme.isSubRoute') ? 'provider.' : ''}content`,
@@ -1028,6 +1040,30 @@ export default Ember.Controller.extend(Analytics, BasicsValidations, NodeActions
         },
         cancel() {
             this.transitionToRoute('index');
+        },
+        resubmit() {
+            this.set('savingPreprint', true);
+            this.toggleProperty('shareButtonDisabled');
+
+            let log = this.get('store').createRecord('reviewLog', {
+               action: 'submit',
+               reviewable: this.get('model')
+            });
+
+            return log.save()
+                .then(() => {
+                    this.transitionToRoute(
+                        `${this.get('theme.isSubRoute') ? 'provider.' : ''}content`,
+                        this.get('model')
+                    );
+                })
+                .catch(() => {
+                    this.toggleProperty('shareButtonDisabled');
+                    return this.get('toast')
+                        .error(this.get('i18n')
+                            .t(`submit.error_${this.get('editMode') ? 'completing' : 'saving'}_preprint`)
+                        );
+                });
         },
         returnToSubmission() {
             this.transitionToRoute(

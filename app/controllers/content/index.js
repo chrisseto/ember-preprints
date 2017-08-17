@@ -42,6 +42,12 @@ function queryStringify(queryParams) {
     return query.join('&');
 }
 
+const DATE_LABEL = {
+    created: 'content.date_label.created_on',
+    submitted: 'content.date_label.submitted_on'
+}
+const PRE_MODERATION = 'pre-moderation';
+
 /**
  * @module ember-preprints
  * @submodule controllers
@@ -60,6 +66,18 @@ export default Ember.Controller.extend(Analytics, {
     queryParams: {
         chosenFile: 'file'
     },
+
+    moderationType: Ember.computed('model.provider.reviewsWorkflow', function() {
+        if (this.get('model.provider.reviewsWorkflow') === 'none') {
+            return '';
+        }
+        return this.get('model.provider.reviewsWorkflow').toLowerCase();
+    }),
+    logDate: null,
+    logDateLabel: Ember.computed('moderationType', function() {
+        return this.get('moderationType') === PRE_MODERATION ? DATE_LABEL['submitted'] : DATE_LABEL['created'];
+    }),
+
     isAdmin: Ember.computed('node', function() {
         // True if the current user has admin permissions for the node that contains the preprint
         return (this.get('node.currentUserPermissions') || []).includes(permissions.ADMIN);

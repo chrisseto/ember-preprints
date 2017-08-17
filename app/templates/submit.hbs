@@ -233,8 +233,19 @@
                                 <button class="btn btn-success btn-md m-t-md pull-right" disabled={{unless allSectionsValid true}} {{action 'toggleSharePreprintModal'}}>
                                     {{t "submit.body.edit.resubmit_button"}}
                                 </button>
+                                <div>
+                                    {{confirm-share-preprint
+                                        isOpen=showModalSharePreprint
+                                        shareButtonDisabled=shareButtonDisabled
+                                        savePreprint=(action 'resubmit')
+                                        buttonLabel="submit.body.edit.resubmit_button"
+                                        title=modalTitle
+                                    }}
+                                </div>
                             {{/if}}
-                            <button class="btn btn-primary btn-md m-t-md pull-right" disabled={{unless allSectionsValid true}} {{action 'returnToSubmission'}}>{{t "submit.body.edit.return_button"}}</button>
+                            <button class="btn btn-primary btn-md m-t-md pull-right" disabled={{unless allSectionsValid true}} {{action 'returnToSubmission'}}>
+                                {{t "submit.body.edit.return_button"}}
+                            </button>
                         </div>
                     {{else}}
                         <p class="information">{{t generalInformation name=ProviderName}}</p>
@@ -261,7 +272,13 @@
                                 {{t "global.cancel"}}
                             </button>
                             <div>
-                                {{confirm-share-preprint isOpen=showModalSharePreprint shareButtonDisabled=shareButtonDisabled savePreprint=(action 'savePreprint')}}
+                                {{confirm-share-preprint
+                                    isOpen=showModalSharePreprint
+                                    shareButtonDisabled=shareButtonDisabled
+                                    savePreprint=(action 'savePreprint')
+                                    buttonLabel=buttonLabel
+                                    title=modalTitle
+                                }}
                             </div>
                         </div>
                     {{/if}}
