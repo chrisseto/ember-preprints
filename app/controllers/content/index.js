@@ -67,15 +67,15 @@ export default Ember.Controller.extend(Analytics, {
         chosenFile: 'file'
     },
 
-    moderationType: Ember.computed('model.provider.reviewsWorkflow', function() {
-        if (this.get('model.provider.reviewsWorkflow') === 'none') {
-            return '';
-        }
-        return this.get('model.provider.reviewsWorkflow').toLowerCase();
-    }),
     logDate: null,
-    logDateLabel: Ember.computed('moderationType', function() {
-        return this.get('moderationType') === PRE_MODERATION ? DATE_LABEL['submitted'] : DATE_LABEL['created'];
+    logDateLabel: Ember.computed('model.provider.reviewsWorkflow', function() {
+        let moderationType = this.get('model.provider.reviewsWorkflow') ?
+            this.get('model.provider.reviewsWorkflow').toLowerCase() :
+            null;
+
+        return moderationType === PRE_MODERATION ?
+            DATE_LABEL['submitted'] :
+            DATE_LABEL['created'];
     }),
 
     isAdmin: Ember.computed('node', function() {

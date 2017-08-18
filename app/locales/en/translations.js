@@ -188,11 +188,18 @@ export default {
             },
             submit: {
                 information: {
-                    line1: `When you create this {{preprintWords.preprint}}, it will be assigned a DOI and become publicly accessible via {{name}}. The {{preprintWords.preprint}} file cannont be deleted, but it can be updated or modified. The related OSF project can be used to manage supplementary materials, appendices, data, or protocols for your {{preprintWords.preprint}}.`,
-                    line1_moderation: `When you submit this {{preprintWords.preprint}}, it will be assigned a DOI. The {{preprintWords.preprint}} file cannont be deleted, but it can be updated or modified. The related OSF project can be used to manage supplementary materials, appendices, data, or protocols for your {{preprintWords.preprint}}.`,
-                    line2: `By submitting this {{preprintWords.preprint}}, you confirm that all Contributors agree with sharing it, and that you have the right to share this {{preprintWords.preprint}}.`,
-                    line3_pre: `{{name}} uses <strong>{{reviewsWorkflow}}</strong>, therefore your {{preprintWords.preprint}} will not become publicly accessible until a moderator accepts the submission.`,
-                    line3_post: `{{name}} uses <strong>{{reviewsWorkflow}}</strong>, therefore your {{preprintWords.preprint}} will become publicly accessible after creation and will only become private if rejected by a moderator.`,
+                    line1: {
+                        default: `When you create this {{preprintWords.preprint}}, it will be assigned a DOI and become publicly accessible via {{name}}. The {{preprintWords.preprint}} file cannont be deleted, but it can be updated or modified. The related OSF project can be used to manage supplementary materials, appendices, data, or protocols for your {{preprintWords.preprint}}.`,
+                        moderation: `When you submit this {{preprintWords.preprint}}, it will be assigned a DOI. The {{preprintWords.preprint}} file cannont be deleted, but it can be updated or modified. The related OSF project can be used to manage supplementary materials, appendices, data, or protocols for your {{preprintWords.preprint}}.`,
+                    },
+                    line2: {
+                        create: `By creating this {{preprintWords.preprint}}, you confirm that all Contributors agree with sharing it, and that you have the right to share this {{preprintWords.preprint}}.`,
+                        submit: `By submitting this {{preprintWords.preprint}}, you confirm that all Contributors agree with sharing it, and that you have the right to share this {{preprintWords.preprint}}.`
+                    },
+                    line3: {
+                        pre: `{{name}} uses <strong>{{reviewsWorkflow}}</strong>, therefore your {{preprintWords.preprint}} will not become publicly accessible until a moderator accepts the submission.`,
+                        post: `{{name}} uses <strong>{{reviewsWorkflow}}</strong>, therefore your {{preprintWords.preprint}} will become publicly accessible after creation and will only become private if rejected by a moderator.`,
+                    }
                 },
                 invalid: {
                     description: `The following section(s) must be completed before submitting this {{preprintWords.preprint}}.`,
@@ -205,11 +212,15 @@ export default {
             },
             edit: {
                 information: {
-                    line1_pre: `{{name}} uses <strong>{{reviewsWorkflow}}</strong>, therefore your {{preprintWords.preprint}} will not become publicly accessible until a moderator accepts the submission.`,
-                    line2_pre_pending: `Resubmitting may affect your position in the moderation queue.`,
-                    line2_pre_rejected: `Once you have addressed any moderator concerns, you may resubmit for review.`,
-                    line1_post_rejected: `{{name}} uses <strong>{{reviewsWorkflow}}</strong>. Your {{preprintWords.preprint}} was rejected by a moderator so it will remain private.`,
-                    line2_post_rejected: `If you have addressed all moderator concerns or believe there has been a mistake, please email <a>{{email}}</a> to discuss resubmission.`
+                    line1: {
+                        pre: `{{name}} uses <strong>{{reviewsWorkflow}}</strong>, therefore your {{preprintWords.preprint}} will not become publicly accessible until a moderator accepts the submission.`,
+                        post_rejected: `{{name}} uses <strong>{{reviewsWorkflow}}</strong>. Your {{preprintWords.preprint}} was rejected by a moderator so it will remain private.`,
+                    },
+                    line2: {
+                        pre_pending: `Resubmitting may affect your position in the moderation queue.`,
+                        pre_rejected: `Once you have addressed any moderator concerns, you may resubmit for review.`,
+                        post_rejected: `If you have addressed all moderator concerns or believe there has been a mistake, please email <a>{{email}}</a> to discuss resubmission.`
+                    }
                 },
                 resubmit_button: `Resubmit`,
                 return_button: `Return to {{preprintWords.preprint}}`

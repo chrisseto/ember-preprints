@@ -68,24 +68,29 @@ const MODAL_TITLE = {
 };
 
 const SUBMIT_MESSAGES = {
-    default: 'submit.body.submit.information.line1',
-    moderation: 'submit.body.submit.information.line1_moderation',
-    [PRE_MODERATION]: 'submit.body.submit.information.line3_pre',
-    [POST_MODERATION]: 'submit.body.submit.information.line3_post',
+    default: 'submit.body.submit.information.line1.default',
+    moderation: 'submit.body.submit.information.line1.moderation',
+    [PRE_MODERATION]: 'submit.body.submit.information.line3.pre',
+    [POST_MODERATION]: 'submit.body.submit.information.line3.post',
 };
+
+const PERMISSION_MESSAGES = {
+    create: 'submit.body.submit.information.line2.create',
+    submit: 'submit.body.submit.information.line2.submit'
+}
 
 const EDIT_MESSAGES = {
     line1: {
-        [PRE_MODERATION]: 'submit.body.edit.information.line1_pre',
-        [POST_MODERATION]: 'submit.body.edit.information.line1_post_rejected'
+        [PRE_MODERATION]: 'submit.body.edit.information.line1.pre',
+        [POST_MODERATION]: 'submit.body.edit.information.line1.post_rejected'
     },
     line2: {
         [PENDING]: {
-            [PRE_MODERATION]: 'submit.body.edit.information.line2_pre_pending',
+            [PRE_MODERATION]: 'submit.body.edit.information.line2.pre_pending',
         },
         [REJECTED]: {
-            [PRE_MODERATION]: 'submit.body.edit.information.line2_pre_rejected',
-            [POST_MODERATION]: 'submit.body.edit.information.line2_post_rejected'
+            [PRE_MODERATION]: 'submit.body.edit.information.line2.pre_rejected',
+            [POST_MODERATION]: 'submit.body.edit.information.line2.post_rejected'
         }
     }
 };
@@ -415,36 +420,50 @@ export default Ember.Controller.extend(Analytics, BasicsValidations, NodeActions
     ////////////////////////////////////////////////////
 
     moderationType: Ember.computed('theme.provider.reviewsWorkflow', function() {
-        if (this.get('theme.provider.reviewsWorkflow') === 'none') {
-            return '';
-        }
-        return this.get('theme.provider.reviewsWorkflow').toLowerCase();
+        return this.get('theme.provider.reviewsWorkflow') ?
+            this.get('theme.provider.reviewsWorkflow').toLowerCase() :
+            null;
     }),
     workflow: Ember.computed('moderationType', function () {
         return WORKFLOW[this.get('moderationType')];
     }),
     providerName: Ember.computed('theme.isProvider', function() {
-        return this.get('theme.isProvider') ? this.get('theme.provider.name') : this.get('i18n').t('global.brand_name');
+        return this.get('theme.isProvider') ?
+            this.get('theme.provider.name') :
+            this.get('i18n').t('global.brand_name');
     }),
     modalTitle: Ember.computed('moderationType', function() {
         if (this.get('editMode')) {
             return MODAL_TITLE['resubmit'];
         }
-        return this.get('moderationType') === PRE_MODERATION ? MODAL_TITLE['submit'] : MODAL_TITLE['create'];
+        return this.get('moderationType') === PRE_MODERATION ?
+            MODAL_TITLE['submit'] :
+            MODAL_TITLE['create'];
     }),
 
     // submission
     heading: Ember.computed('moderationType', function() {
-        return this.get('moderationType') === PRE_MODERATION ? ACTION['submit']['heading'] : ACTION['create']['heading'];
+        return this.get('moderationType') === PRE_MODERATION ?
+            ACTION['submit']['heading'] :
+            ACTION['create']['heading'];
     }),
     buttonLabel: Ember.computed('moderationType', function() {
-        return this.get('moderationType') === PRE_MODERATION ? ACTION['submit']['button'] : ACTION['create']['button'];
+        return this.get('moderationType') === PRE_MODERATION ?
+            ACTION['submit']['button'] :
+            ACTION['create']['button'];
     }),
     generalInformation: Ember.computed('moderationType', function() {
-        return this.get('moderationType') ? SUBMIT_MESSAGES['moderation'] : SUBMIT_MESSAGES['default'];
+        return this.get('moderationType') ?
+            SUBMIT_MESSAGES['moderation'] :
+            SUBMIT_MESSAGES['default'];
     }),
-    moderationInformation: Ember.computed('theme.provider.reviewsWorkflow', function() {
-        return SUBMIT_MESSAGES[this.get('theme.provider.reviewsWorkflow')];
+    permissionInformation: Ember.computed('moderationType', function() {
+        return this.get('moderationType') === PRE_MODERATION ?
+            PERMISSION_MESSAGES['submit'] :
+            PERMISSION_MESSAGES['create'];
+    }),
+    moderationInformation: Ember.computed('moderationType', function() {
+        return SUBMIT_MESSAGES[this.get('moderationType')];
     }),
 
     // edit

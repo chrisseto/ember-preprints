@@ -52,16 +52,9 @@ export default Ember.Component.extend({
     classNameBindings: ['getClassName'],
 
     getClassName: Ember.computed('submission.provider.reviewsWorkflow', 'submission.reviewsState', function() {
-        if (this.get('submission.reviewsState') === PENDING) {
-            return CLASS_NAMES[this.get('submission.provider.reviewsWorkflow').toLowerCase()]
-        }
-        return CLASS_NAMES[this.get('submission.reviewsState')];
-    }),
-
-    // TODO: move to 'content/index.hbs' once null value is updated
-    attributeBindings: ['hidden'],
-    hidden: Ember.computed('submission.provider.reviewsWorkflow', function() {
-        return this.get('submission.provider.reviewsWorkflow') === 'none';
+        return this.get('submission.reviewsState') === PENDING ?
+            CLASS_NAMES[this.get('submission.provider.reviewsWorkflow').toLowerCase()] :
+            CLASS_NAMES[this.get('submission.reviewsState')];
     }),
 
     didReceiveAttrs() {
@@ -78,17 +71,20 @@ export default Ember.Component.extend({
     reviewerName: '',
 
     bannerContent: Ember.computed('statusExplanation', 'workflow', function() {
-        let tName = this.get('theme.isProvider') ? this.get('theme.provider.name') : this.get('i18n').t('global.brand_name');
+        let tName = this.get('theme.isProvider') ?
+            this.get('theme.provider.name') :
+            this.get('i18n').t('global.brand_name');
+
         let tWorkflow = this.get('i18n').t(this.get('workflow'));
         let tStatusExplanation = this.get('i18n').t(this.get('statusExplanation'));
+
         return `${this.get('i18n').t(this.get('baseMessage'), {name: tName, reviewsWorkflow: tWorkflow})} ${tStatusExplanation}.`;
     }),
 
     statusExplanation: Ember.computed('submission.provider.reviewsWorkflow', 'submission.reviewsState', function() {
-        if (this.get('submission.reviewsState') === PENDING) {
-            return MESSAGE[this.get('submission.provider.reviewsWorkflow').toLowerCase()];
-        }
-        return MESSAGE[this.get('submission.reviewsState')];
+        return this.get('submission.reviewsState') === PENDING ?
+            MESSAGE[this.get('submission.provider.reviewsWorkflow').toLowerCase()] :
+            MESSAGE[this.get('submission.reviewsState')];
     }),
 
     status: Ember.computed('submission.reviewsState', function() {

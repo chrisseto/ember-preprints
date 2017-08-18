@@ -249,7 +249,7 @@
                         </div>
                     {{else}}
                         <p class="information">{{t generalInformation name=ProviderName}}</p>
-                        <p class="information">{{t "submit.body.submit.information.line2" name=providerName}}</p>
+                        <p class="information">{{t permissionInformation name=providerName}}</p>
                         {{#if moderationType}}
                             <p class="information">
                                 {{t moderationInformation name=providerName reviewsWorkflow=(t workflow)}}
