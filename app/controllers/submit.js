@@ -1031,18 +1031,32 @@ export default Ember.Controller.extend(Analytics, BasicsValidations, NodeActions
             }
             node.set('public', true);
 
+            if (log) {
+                return log.save()
+                    .then(() => model.save())
+                    .then(() => node.save())
+                    .then(() => {
+                        this.transitionToRoute(
+                            `${this.get('theme.isSubRoute') ? 'provider.' : ''}content`,
+                            model
+                        );
+                    })
+                    .catch(() => {
+                        this.toggleProperty('shareButtonDisabled');
+                        return this.get('toast')
+                            .error(this.get('i18n')
+                                .t(`submit.error_${this.get('editMode') ? 'completing' : 'saving'}_preprint`)
+                            );
+                    });
+            }
+
             return model.save()
+                .then(() => node.save())
                 .then(() => {
-                    node.save();
-                    if (log) {
-                        log.save();
-                    }
-                })
-                .then(() => {
-                    this.transitionToRoute(
-                        `${this.get('theme.isSubRoute') ? 'provider.' : ''}content`,
-                        model
-                    );
+                        this.transitionToRoute(
+                            `${this.get('theme.isSubRoute') ? 'provider.' : ''}content`,
+                            model
+                        );
                 })
                 .catch(() => {
                     this.toggleProperty('shareButtonDisabled');
