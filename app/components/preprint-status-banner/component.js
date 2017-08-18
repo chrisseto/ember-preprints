@@ -53,7 +53,7 @@ export default Ember.Component.extend({
 
     getClassName: Ember.computed('submission.provider.reviewsWorkflow', 'submission.reviewsState', function() {
         return this.get('submission.reviewsState') === PENDING ?
-            CLASS_NAMES[this.get('submission.provider.reviewsWorkflow').toLowerCase()] :
+            CLASS_NAMES[this.get('submission.provider.reviewsWorkflow')] :
             CLASS_NAMES[this.get('submission.reviewsState')];
     }),
 
@@ -83,7 +83,7 @@ export default Ember.Component.extend({
 
     statusExplanation: Ember.computed('submission.provider.reviewsWorkflow', 'submission.reviewsState', function() {
         return this.get('submission.reviewsState') === PENDING ?
-            MESSAGE[this.get('submission.provider.reviewsWorkflow').toLowerCase()] :
+            MESSAGE[this.get('submission.provider.reviewsWorkflow')] :
             MESSAGE[this.get('submission.reviewsState')];
     }),
 
@@ -96,7 +96,7 @@ export default Ember.Component.extend({
     }),
 
     workflow: Ember.computed('submission.provider.reviewsWorkflow', function () {
-        return WORKFLOW[this.get('submission.provider.reviewsWorkflow').toLowerCase()];
+        return WORKFLOW[this.get('submission.provider.reviewsWorkflow')];
     }),
 
 });

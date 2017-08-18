@@ -69,11 +69,7 @@ export default Ember.Controller.extend(Analytics, {
 
     logDate: null,
     logDateLabel: Ember.computed('model.provider.reviewsWorkflow', function() {
-        let moderationType = this.get('model.provider.reviewsWorkflow') ?
-            this.get('model.provider.reviewsWorkflow').toLowerCase() :
-            null;
-
-        return moderationType === PRE_MODERATION ?
+        return this.get('model.provider.reviewsWorkflow') === PRE_MODERATION ?
             DATE_LABEL['submitted'] :
             DATE_LABEL['created'];
     }),

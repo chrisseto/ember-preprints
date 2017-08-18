@@ -189,8 +189,8 @@ export default {
             submit: {
                 information: {
                     line1: {
-                        default: `When you create this {{preprintWords.preprint}}, it will be assigned a DOI and become publicly accessible via {{name}}. The {{preprintWords.preprint}} file cannont be deleted, but it can be updated or modified. The related OSF project can be used to manage supplementary materials, appendices, data, or protocols for your {{preprintWords.preprint}}.`,
-                        moderation: `When you submit this {{preprintWords.preprint}}, it will be assigned a DOI. The {{preprintWords.preprint}} file cannont be deleted, but it can be updated or modified. The related OSF project can be used to manage supplementary materials, appendices, data, or protocols for your {{preprintWords.preprint}}.`,
+                        default: `When you create this {{preprintWords.preprint}}, it will be assigned a DOI and become publicly accessible via {{name}}. The {{preprintWords.preprint}} file cannot be deleted, but it can be updated or modified. The related OSF project can be used to manage supplementary materials, appendices, data, or protocols for your {{preprintWords.preprint}}.`,
+                        moderation: `When you submit this {{preprintWords.preprint}}, it will be assigned a DOI. The {{preprintWords.preprint}} file cannot be deleted, but it can be updated or modified. The related OSF project can be used to manage supplementary materials, appendices, data, or protocols for your {{preprintWords.preprint}}.`,
                     },
                     line2: {
                         create: `By creating this {{preprintWords.preprint}}, you confirm that all Contributors agree with sharing it, and that you have the right to share this {{preprintWords.preprint}}.`,

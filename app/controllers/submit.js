@@ -419,11 +419,7 @@ export default Ember.Controller.extend(Analytics, BasicsValidations, NodeActions
     // Language about submission and moderation.
     ////////////////////////////////////////////////////
 
-    moderationType: Ember.computed('theme.provider.reviewsWorkflow', function() {
-        return this.get('theme.provider.reviewsWorkflow') ?
-            this.get('theme.provider.reviewsWorkflow').toLowerCase() :
-            null;
-    }),
+    moderationType: Ember.computed.alias('theme.provider.reviewsWorkflow'),
     workflow: Ember.computed('moderationType', function () {
         return WORKFLOW[this.get('moderationType')];
     }),
@@ -1030,11 +1026,10 @@ export default Ember.Controller.extend(Analytics, BasicsValidations, NodeActions
                    action: 'submit',
                    reviewable: this.get('model')
                 });
-            }
-            if (this.get('moderationType') !== PRE_MODERATION) {
+            } else {
                 model.set('isPublished', true);
-                node.set('public', true);
             }
+            node.set('public', true);
 
             return model.save()
                 .then(() => {
