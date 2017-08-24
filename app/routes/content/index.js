@@ -38,11 +38,6 @@ export default Ember.Route.extend(Analytics, ResetScrollMixin, SetupSubmitContro
         const {location: {origin}} = window;
         let contributors = Ember.A();
 
-        preprint.get('reviewLogs').then(reviewLogs => {
-            let firstLog = reviewLogs.toArray().get('firstObject');
-            this.controllerFor(this.controllerName).set('logDate', firstLog.get('dateCreated'));
-        });
-
         const downloadUrl = [
             origin,
             this.get('theme.isSubRoute') ? `preprints/${this.get('theme.id')}` : null,

@@ -67,7 +67,6 @@ export default Ember.Controller.extend(Analytics, {
         chosenFile: 'file'
     },
 
-    logDate: null,
     logDateLabel: Ember.computed('model.provider.reviewsWorkflow', function() {
         return this.get('model.provider.reviewsWorkflow') === PRE_MODERATION ?
             DATE_LABEL['submitted'] :
