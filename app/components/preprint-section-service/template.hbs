@@ -1,0 +1,37 @@
+{{#panels.panel name='section-provider' open=true tagName='section' class='preprint-form-section preprint-form-block' as |panel|}}
+    {{#panel.toggle click=(action 'toggle' panel.toggle) tagName='header' data-test-section-toggle='service'}}
+        PLACE HOLDER
+    {{/panel.toggle}}
+
+    {{#panel.body data-test-section-body='service'}}
+        <div>
+            {{#each providers as |provider|}}
+                <button
+                    {{action 'selectProvider' provider}}
+                    class="provider submit-provider-logo"
+                    data-test-provider-selected="{{eq provider selectedProvider}}"
+                    data-test-provider-option-id="{{provider.id}}"
+                    title="{{provider.name}}"
+                />
+            {{/each}}
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="pull-right">
+                    <button {{action 'discard'}}
+                         class="btn btn-default"
+                         disabled={{discardDisabled}}
+                         data-test-section-discard="service"
+                    >
+                        {{t "global.discard"}}
+                    </button>
+
+                    <button {{action 'save'}} class="btn btn-primary" data-test-section-save="service">
+                        {{t "submit.body.continue"}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    {{/panel.body}}
+{{/panels.panel}}

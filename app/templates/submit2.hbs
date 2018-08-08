@@ -1,0 +1,54 @@
+{{title 'Submit'}}
+
+<div class="preprint-submit-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <h1>
+                    {{! TODO Fix the wierd flash }}
+                    {{t pageHeading documentType=provider.documentType}}
+                </h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="preprint-submit-body">
+    <div class="container">
+        <div class="row m-t-lg">
+            <div class="col-xs-12 col-md-10 col-md-offset-1">
+                <p class="instructions">
+                    {{if editMode (t "submit.body.p_edit" documentType=currentProvider.documentType)}}
+                </p>
+
+                {{#cp-panels accordion=true animate=false as |panels|}}
+
+                    {{#preprint-discipline-section provider=currentProvider as |section|}}
+                        {{#panels.panel tagName='section' class='preprint-form-section preprint-form-block' as |panel| }}
+                            {{#panel.toggle click=toggle tagName="header" data-test-section-toggle=section.name}}
+                                {{section.header}}
+                            {{/panel.toggle}}
+
+                            {{#panel.body}}
+                                {{section.body}}
+                            {{/panel.body}}
+                        {{/panels.panel}}
+                    {{/preprint-discipline-section}}
+
+                {{/cp-panels}}
+
+                {{#cp-panels accordion=true animate=false as |panels|}}
+                    {{#panels.panel open=true as |panel|}}
+                        {{#panel.toggle}}
+                            I"M THE TOGGLE
+                        {{/panel.toggle}}
+                        {{#panel.body}}
+                            I"M THE BODY
+                        {{/panel.body}}
+                    {{/panels.panel}}
+                    {{preprint-form-section 'unittest' panels isValid=true open=false onOpenFail=stub}}
+                {{/cp-panels}}
+            </div>
+        </div>
+    </div>
+</div>

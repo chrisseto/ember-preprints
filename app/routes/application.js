@@ -65,7 +65,7 @@ export default Route.extend(Analytics, OSFAgnosticAuthRouteMixin, {
         return this.get('theme.headTags');
     },
     setTheme (providers) {
-        if (providers.length) {
+        if (providers.get('length')) {
             this.set('theme.id', providers.objectAt(0).get('id'));
         }
     },

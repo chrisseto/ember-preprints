@@ -55,6 +55,7 @@ Router.map(function() {
     if (window.isProviderDomain) {
         this.route('index', { path: '/' });
         this.route('submit');
+        this.route('submit2');
         this.route('discover');
         this.route('page-not-found');
         this.route('forbidden');
@@ -62,6 +63,7 @@ Router.map(function() {
     } else {
         this.route('index', { path: 'preprints' });
         this.route('submit', { path: 'preprints/submit' });
+        this.route('submit2', { path: 'preprints/submit2' });
         this.route('discover', { path: 'preprints/discover' });
         this.route('provider', { path: 'preprints/:slug' }, function () {
             this.route('content', { path: '/:preprint_id' }, function() {
@@ -69,6 +71,7 @@ Router.map(function() {
             });
             this.route('discover');
             this.route('submit');
+            this.route('submit2');
         });
         this.route('page-not-found', { path: 'preprints/page-not-found' });
         this.route('forbidden', { path: 'preprints/forbidden' });

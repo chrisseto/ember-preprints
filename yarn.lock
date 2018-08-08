@@ -163,6 +163,13 @@
     "@ember-decorators/utils" "^2.1.0"
     ember-cli-babel "^6.6.0"
 
+"@ember-decorators/component@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@ember-decorators/component/-/component-2.3.1.tgz#4e692c78f4ce69ba107759e5f8e2ed59c55dc232"
+  dependencies:
+    "@ember-decorators/utils" "^2.3.1"
+    ember-cli-babel "^6.6.0"
+
 "@ember-decorators/controller@^2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@ember-decorators/controller/-/controller-2.1.0.tgz#57a7be3d4eaa18e5021096d404417b1b943e7124"
@@ -170,11 +177,25 @@
     "@ember-decorators/utils" "^2.1.0"
     ember-cli-babel "^6.6.0"
 
+"@ember-decorators/controller@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@ember-decorators/controller/-/controller-2.3.1.tgz#0b64320b037d413d5a351129fb1269e0b9f955f8"
+  dependencies:
+    "@ember-decorators/utils" "^2.3.1"
+    ember-cli-babel "^6.6.0"
+
 "@ember-decorators/data@^2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@ember-decorators/data/-/data-2.1.0.tgz#df29cc4bb21b7f246a02f810e2c7b56bd6f25294"
   dependencies:
     "@ember-decorators/utils" "^2.1.0"
+    ember-cli-babel "^6.6.0"
+
+"@ember-decorators/data@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@ember-decorators/data/-/data-2.3.1.tgz#a2f28a56f0190217b863846808fbee9ec14c2fd9"
+  dependencies:
+    "@ember-decorators/utils" "^2.3.1"
     ember-cli-babel "^6.6.0"
 
 "@ember-decorators/object@^2.1.0":
@@ -185,11 +206,26 @@
     ember-cli-babel "^6.6.0"
     ember-compatibility-helpers "^1.0.0"
 
+"@ember-decorators/object@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@ember-decorators/object/-/object-2.3.1.tgz#1886911154a58e1d5e5bd1be883249d05d52c918"
+  dependencies:
+    "@ember-decorators/utils" "^2.3.1"
+    ember-cli-babel "^6.6.0"
+    ember-compatibility-helpers "^1.0.0"
+
 "@ember-decorators/service@^2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@ember-decorators/service/-/service-2.1.0.tgz#c6bbfd34fbb9fb19317ab2be351d8577701e5315"
   dependencies:
     "@ember-decorators/utils" "^2.1.0"
+    ember-cli-babel "^6.6.0"
+
+"@ember-decorators/service@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@ember-decorators/service/-/service-2.3.1.tgz#84734f22ba295929ba5d506971535358e9e2a432"
+  dependencies:
+    "@ember-decorators/utils" "^2.3.1"
     ember-cli-babel "^6.6.0"
 
 "@ember-decorators/utils@^2.1.0":
@@ -199,7 +235,14 @@
     ember-cli-babel "^6.6.0"
     ember-compatibility-helpers "^1.0.0"
 
-"@ember/test-helpers@^0.7.18":
+"@ember-decorators/utils@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@ember-decorators/utils/-/utils-2.3.1.tgz#1da06a8f11062b0176dac5b427b27b4eabff3604"
+  dependencies:
+    ember-cli-babel "^6.6.0"
+    ember-compatibility-helpers "^1.0.0"
+
+"@ember/test-helpers@^0.7.18", "@ember/test-helpers@^0.7.25":
   version "0.7.25"
   resolved "https://registry.yarnpkg.com/@ember/test-helpers/-/test-helpers-0.7.25.tgz#b4014c108b40ffaf74f3c4d5918800917541541d"
   dependencies:
@@ -741,6 +784,17 @@ babel-eslint@^7.2.3:
     babel-types "^6.23.0"
     babylon "^6.17.0"
 
+babel-eslint@^8.0.0:
+  version "8.2.6"
+  resolved "https://registry.yarnpkg.com/babel-eslint/-/babel-eslint-8.2.6.tgz#6270d0c73205628067c0f7ae1693a9e797acefd9"
+  dependencies:
+    "@babel/code-frame" "7.0.0-beta.44"
+    "@babel/traverse" "7.0.0-beta.44"
+    "@babel/types" "7.0.0-beta.44"
+    babylon "7.0.0-beta.44"
+    eslint-scope "3.7.1"
+    eslint-visitor-keys "^1.0.0"
+
 babel-eslint@^8.0.3:
   version "8.2.3"
   resolved "https://registry.yarnpkg.com/babel-eslint/-/babel-eslint-8.2.3.tgz#1a2e6681cc9bc4473c32899e59915e19cd6733cf"
@@ -892,6 +946,12 @@ babel-plugin-debug-macros@^0.1.10, babel-plugin-debug-macros@^0.1.11:
   dependencies:
     semver "^5.3.0"
 
+babel-plugin-debug-macros@^0.2.0-beta.6:
+  version "0.2.0-beta.6"
+  resolved "https://registry.yarnpkg.com/babel-plugin-debug-macros/-/babel-plugin-debug-macros-0.2.0-beta.6.tgz#ecdf6e408d5c863ab21740d7ad7f43f027d2f912"
+  dependencies:
+    semver "^5.3.0"
+
 babel-plugin-ember-modules-api-polyfill@^1.4.2:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-ember-modules-api-polyfill/-/babel-plugin-ember-modules-api-polyfill-1.6.0.tgz#abd1afa4237b3121cb51222f9bf3283cad8990aa"
@@ -901,6 +961,12 @@ babel-plugin-ember-modules-api-polyfill@^1.4.2:
 babel-plugin-ember-modules-api-polyfill@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-ember-modules-api-polyfill/-/babel-plugin-ember-modules-api-polyfill-2.3.0.tgz#0c01f359658cfb9c797f705af6b09f6220205ae0"
+  dependencies:
+    ember-rfc176-data "^0.3.0"
+
+babel-plugin-ember-modules-api-polyfill@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/babel-plugin-ember-modules-api-polyfill/-/babel-plugin-ember-modules-api-polyfill-2.3.2.tgz#56ea34bea963498d070a2b7dc2ce18a92c434093"
   dependencies:
     ember-rfc176-data "^0.3.0"
 
@@ -1571,6 +1637,21 @@ broccoli-babel-transpiler@^5.6.2:
 broccoli-babel-transpiler@^6.0.0, broccoli-babel-transpiler@^6.1.2, broccoli-babel-transpiler@^6.4.2:
   version "6.4.3"
   resolved "https://registry.yarnpkg.com/broccoli-babel-transpiler/-/broccoli-babel-transpiler-6.4.3.tgz#06e399298d41700cdc10d675b1d808a89ef6b2d0"
+  dependencies:
+    babel-core "^6.26.0"
+    broccoli-funnel "^2.0.1"
+    broccoli-merge-trees "^2.0.0"
+    broccoli-persistent-filter "^1.4.3"
+    clone "^2.0.0"
+    hash-for-dep "^1.2.3"
+    heimdalljs-logger "^0.1.7"
+    json-stable-stringify "^1.0.0"
+    rsvp "^4.8.2"
+    workerpool "^2.3.0"
+
+broccoli-babel-transpiler@^6.4.5:
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/broccoli-babel-transpiler/-/broccoli-babel-transpiler-6.5.0.tgz#aa501a227b298a99742fdd0309b1eaad7124bba0"
   dependencies:
     babel-core "^6.26.0"
     broccoli-funnel "^2.0.1"
@@ -3262,6 +3343,24 @@ ember-cli-babel@^6.0.0, ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-be
     ember-cli-version-checker "^2.1.2"
     semver "^5.5.0"
 
+ember-cli-babel@^6.12:
+  version "6.16.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-6.16.0.tgz#623b4a2764ece72b65f1572fc8aeb5714a450228"
+  dependencies:
+    amd-name-resolver "1.2.0"
+    babel-plugin-debug-macros "^0.2.0-beta.6"
+    babel-plugin-ember-modules-api-polyfill "^2.3.2"
+    babel-plugin-transform-es2015-modules-amd "^6.24.0"
+    babel-polyfill "^6.26.0"
+    babel-preset-env "^1.7.0"
+    broccoli-babel-transpiler "^6.4.5"
+    broccoli-debug "^0.6.4"
+    broccoli-funnel "^2.0.0"
+    broccoli-source "^1.1.0"
+    clone "^2.0.0"
+    ember-cli-version-checker "^2.1.2"
+    semver "^5.5.0"
+
 ember-cli-bootstrap-sassy@0.5.8:
   version "0.5.8"
   resolved "https://registry.yarnpkg.com/ember-cli-bootstrap-sassy/-/ember-cli-bootstrap-sassy-0.5.8.tgz#9bb6d4c3f7f8a634fc51b0f2a29983d82e88b404"
@@ -3538,7 +3637,7 @@ ember-cli-preprocess-registry@^3.1.0:
     process-relative-require "^1.0.0"
     silent-error "^1.0.0"
 
-ember-cli-qunit@^4.0.0:
+ember-cli-qunit@^4.3.2:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/ember-cli-qunit/-/ember-cli-qunit-4.3.2.tgz#cfd89ad3b0dbc28a9c2223d532b52eeade7c602c"
   dependencies:
@@ -3839,14 +3938,14 @@ ember-cp-validations@^3.5.0, ember-cp-validations@^3.5.2:
     exists-sync "0.0.4"
     walk-sync "^0.3.1"
 
-ember-data-factory-guy@^2.11.6:
-  version "2.18.0"
-  resolved "https://registry.yarnpkg.com/ember-data-factory-guy/-/ember-data-factory-guy-2.18.0.tgz#2936b50e37e4831a11da721ff174d5a56c27cc7b"
+ember-data-factory-guy@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/ember-data-factory-guy/-/ember-data-factory-guy-3.3.1.tgz#2bae9db741803e956eb77e784958e5521ce16922"
   dependencies:
     broccoli-funnel "^1.0.1"
     broccoli-merge-trees "^1.1.1"
-    ember-cli-babel "^6.7.1"
-    pretender "^1.6.0"
+    ember-cli-babel "^6.12"
+    pretender "~2.0.0"
 
 ember-data@2.18.0:
   version "2.18.0"
@@ -3891,6 +3990,18 @@ ember-decorators@^2.0.0-beta.2:
     "@ember-decorators/data" "^2.1.0"
     "@ember-decorators/object" "^2.1.0"
     "@ember-decorators/service" "^2.1.0"
+    ember-cli-babel "^6.0.0"
+    semver "^5.5.0"
+
+ember-decorators@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/ember-decorators/-/ember-decorators-2.3.1.tgz#aef98f6a3e15666bd414576d07cbfc15d39cfe97"
+  dependencies:
+    "@ember-decorators/component" "^2.3.1"
+    "@ember-decorators/controller" "^2.3.1"
+    "@ember-decorators/data" "^2.3.1"
+    "@ember-decorators/object" "^2.3.1"
+    "@ember-decorators/service" "^2.3.1"
     ember-cli-babel "^6.0.0"
     semver "^5.5.0"
 
@@ -4335,6 +4446,13 @@ ember-template-lint@^0.8.16:
     resolve "^1.1.3"
     strip-bom "^3.0.0"
 
+ember-test-selectors@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ember-test-selectors/-/ember-test-selectors-1.0.0.tgz#a2f8cd86f4fb4c320004a2bf0e4c450d41668a21"
+  dependencies:
+    ember-cli-babel "^6.8.2"
+    ember-cli-version-checker "^2.0.0"
+
 ember-text-measurer@^0.4.0:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/ember-text-measurer/-/ember-text-measurer-0.4.1.tgz#30ababa7100b2ffb86f8c37fe2b4b56d2592c626"
@@ -4630,7 +4748,7 @@ eslint-restricted-globals@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/eslint-restricted-globals/-/eslint-restricted-globals-0.1.1.tgz#35f0d5cbc64c2e3ed62e93b4b1a7af05ba7ed4d7"
 
-eslint-scope@^3.7.1, eslint-scope@~3.7.1:
+eslint-scope@3.7.1, eslint-scope@^3.7.1, eslint-scope@~3.7.1:
   version "3.7.1"
   resolved "https://registry.yarnpkg.com/eslint-scope/-/eslint-scope-3.7.1.tgz#3d63c3edfda02e06e01a452ad88caacc7cdcb6e8"
   dependencies:
@@ -4945,6 +5063,10 @@ extsprintf@^1.2.0:
 fake-xml-http-request@^1.4.0, fake-xml-http-request@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/fake-xml-http-request/-/fake-xml-http-request-1.6.0.tgz#bd0ac79ae3e2660098282048a12c730a6f64d550"
+
+fake-xml-http-request@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/fake-xml-http-request/-/fake-xml-http-request-2.0.0.tgz#41a92f0ca539477700cb1dafd2df251d55dac8ff"
 
 faker@^3.0.0:
   version "3.1.0"
@@ -5814,6 +5936,10 @@ ignore-walk@^3.0.1:
 ignore@^3.3.3:
   version "3.3.8"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.8.tgz#3f8e9c35d38708a3a7e0e9abb6c73e7ee7707b2b"
+
+immutable@^3.8.2:
+  version "3.8.2"
+  resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.2.tgz#c2439951455bb39913daf281376f1530e104adf3"
 
 imurmurhash@^0.1.4:
   version "0.1.4"
@@ -8047,11 +8173,18 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
-pretender@^1.4.2, pretender@^1.6.0:
+pretender@^1.4.2:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/pretender/-/pretender-1.6.1.tgz#77d1e42ac8c6b298f5cd43534a87645df035db8c"
   dependencies:
     fake-xml-http-request "^1.6.0"
+    route-recognizer "^0.3.3"
+
+pretender@~2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/pretender/-/pretender-2.0.0.tgz#5adae189f1d5b25f86113f9225df25bed54f4072"
+  dependencies:
+    fake-xml-http-request "^2.0.0"
     route-recognizer "^0.3.3"
 
 printf@^0.2.3:
@@ -8162,6 +8295,13 @@ quick-temp@^0.1.0, quick-temp@^0.1.2, quick-temp@^0.1.3, quick-temp@^0.1.5, quic
     mktemp "~0.4.0"
     rimraf "^2.5.4"
     underscore.string "~3.3.4"
+
+qunit-dom@^0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/qunit-dom/-/qunit-dom-0.7.1.tgz#2e6ad4a6453c034f88ef415250b37e82572460b9"
+  dependencies:
+    broccoli-funnel "^2.0.0"
+    broccoli-merge-trees "^2.0.0"
 
 qunit@^2.5.0:
   version "2.6.1"

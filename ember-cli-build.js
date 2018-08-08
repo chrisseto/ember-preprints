@@ -140,6 +140,12 @@ module.exports = function(defaults) {
         production: path.join('node_modules', 'hint.css/hint.css'),
     });
 
+    app.import('node_modules/immutable/dist/immutable.js', {
+        using: [
+            { transformation: 'amd', as: 'immutable' },
+        ],
+    });
+
     // Import component styles from addon
     app.import('vendor/assets/ember-osf.css');
 

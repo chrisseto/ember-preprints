@@ -546,6 +546,25 @@
                         {{/panel.body}}
                     {{/panels.panel}}
 
+                    {{#preprint-discipline-section as |section|}}
+                        {{#panels.panel
+                            tagName='section'
+                            class="preprint-form-section preprint-form-block"
+                            as |panel|
+                        }}
+                            {{#panel.toggle
+                                tagName="header"
+                                data-test-section-toggle=section.name
+                            }}
+                                {{section.header}}
+                            {{/panel.toggle}}
+
+                            {{#panel.body}}
+                                {{section.body}}
+                            {{/panel.body}}
+                        {{/panels.panel}}
+                    {{/preprint-discipline-section}}
+
                     {{!-- Supplemental materials --}}
                     {{#panels.panel
                         class="preprint-form-section preprint-form-block"

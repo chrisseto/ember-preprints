@@ -1,0 +1,13 @@
+{{#panels.panel open=this.open name=this.sectionName tagName='section' class='preprint-form-section preprint-form-block' as |panel|}}
+    {{#panel.toggle click=(action 'toggle' panel.toggle) tagName='header' data-test-section-toggle=name}}
+        <div class="section-header">
+            {{name}}
+            {{isValid}}
+        </div>
+        {{component this.preview data-test-section-preview=name}}
+    {{/panel.toggle}}
+
+    {{#panel.body data-test-section-body=name}}
+        {{component this.body}}
+    {{/panel.body}}
+{{/panels.panel}}

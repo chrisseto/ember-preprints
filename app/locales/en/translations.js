@@ -170,6 +170,11 @@ export default {
         create_heading: 'Create {{documentType.singularCapitalized}}',
         submit_heading: 'Submit {{documentType.singularCapitalized}}',
         edit_heading: 'Edit {{documentType.singularCapitalized}}',
+        sections: {
+            discipline: {
+                header: 'Discipline',
+            },
+        },
         body: {
             p_add: 'For each section below, "Save and continue" will update your {{documentType.singular}}\'s associated OSF project.',
             p_edit: 'For each section below, "Save and continue" will update your {{documentType.singular}} and the associated OSF project.',
